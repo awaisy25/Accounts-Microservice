@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### sql cache ###
+memory*
+
+.mvn/**
+
+*.DS_Store
