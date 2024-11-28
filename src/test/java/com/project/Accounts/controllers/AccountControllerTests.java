@@ -10,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.project.Accounts.service.AccountServiceImpl;
 import com.project.Accounts.model.Account;
@@ -30,8 +32,9 @@ public class AccountControllerTests {
 		accounts.add(account1);
 		//mocking the fetch accounts
 		when(accountService.fetchAccounts()).thenReturn(accounts);
-		ArrayList<Account> results = accountController.getAccounts();
-		assertEquals(results.size(), 1);
-		assertEquals(results.get(0).getUsername(), "test1");
+		ResponseEntity<ArrayList<Account>> response = accountController.getAccounts();
+		assertEquals(response.getStatusCode(), HttpStatus.OK);
+		Account reponseAccount = response.getBody().get(0);
+		assertEquals(reponseAccount, account1);
 	}
 }
