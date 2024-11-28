@@ -6,6 +6,6 @@ import com.project.Accounts.model.Account;
 
 public interface AccountService {
 	ArrayList<Account> fetchAccounts();
-	void saveAccount(Account newAccount) throws Exception;
+	String saveAccount(Account newAccount);
 	
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.Accounts.model.Account;
+import com.project.Accounts.model.ResponseMessage;
 import com.project.Accounts.service.AccountServiceImpl;
 
 @RestController
@@ -18,15 +19,10 @@ public class AccountController  {
 	private AccountServiceImpl accountService;
 	
 	@PostMapping(value="/accounts")
-	public ResponseEntity<String> createAccount(@RequestBody Account accountBody) {
+	public ResponseEntity<ResponseMessage> createAccount(@RequestBody Account accountBody) {
 		Account account = new Account(accountBody.getUsername(), accountBody.getPassword(), true, accountBody.getEmail());
-		try {
-			accountService.saveAccount(account);
-			return new ResponseEntity<>("Account Succesfully created", HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
+		ResponseMessage response = new ResponseMessage(accountService.saveAccount(account), 200); 
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/accounts")
