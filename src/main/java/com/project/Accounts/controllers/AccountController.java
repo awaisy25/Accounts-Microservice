@@ -21,8 +21,8 @@ public class AccountController  {
 	@PostMapping(value="/accounts")
 	public ResponseEntity<ResponseMessage> createAccount(@RequestBody Account accountBody) {
 		Account account = new Account(accountBody.getUsername(), accountBody.getPassword(), true, accountBody.getEmail());
-		ResponseMessage response = new ResponseMessage(accountService.saveAccount(account), 200); 
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		ResponseMessage response = new ResponseMessage(accountService.saveAccount(account), 201); 
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
 	@GetMapping(value="/accounts")
