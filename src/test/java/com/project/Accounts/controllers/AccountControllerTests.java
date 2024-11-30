@@ -1,5 +1,6 @@
 package com.project.Accounts.controllers;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.project.Accounts.service.AccountServiceImpl;
 import com.project.Accounts.model.Account;
+import com.project.Accounts.model.ResponseMessage;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountControllerTests {
@@ -36,5 +38,12 @@ public class AccountControllerTests {
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 		Account reponseAccount = response.getBody().get(0);
 		assertEquals(reponseAccount, account1);
+	}
+	
+	@Test 
+	public void testCreateAccountSuccess() {
+		Account account1 = new Account("test1", "foo", true, "test@gmail.com");
+		ResponseEntity<ResponseMessage> response = accountController.createAccount(account1);
+		assertEquals(response.getStatusCode(), HttpStatus.CREATED);
 	}
 }
