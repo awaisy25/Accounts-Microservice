@@ -1,6 +1,7 @@
 package com.project.Accounts.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public ArrayList<Account> fetchAccounts() {
-		return (ArrayList<Account>) repository.findAll();
+		List<Account> accounts = repository.findAll();
+		return new ArrayList<>(accounts);
 	}
 
 	@Override
