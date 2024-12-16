@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.project.Accounts.constants.ApiConstants.Status;
 import com.project.Accounts.error.exceptions.AccountExistsException;
 import com.project.Accounts.model.ResponseMessage;
 
@@ -21,7 +22,7 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(value = AccountExistsException.class)
 	public ResponseEntity<ResponseMessage> handleAccountExistsExceptionn(AccountExistsException e) {
-		ResponseMessage errorMessage = new ResponseMessage(e.getMessage(), 409);
+		ResponseMessage errorMessage = new ResponseMessage(e.getMessage(), Status.EXISTS);
 		return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
 	}
 }

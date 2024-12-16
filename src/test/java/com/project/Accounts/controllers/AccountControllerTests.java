@@ -29,7 +29,7 @@ public class AccountControllerTests {
 	
 	@Test
 	public void testGetAccounts() {
-		Account account1 = new Account("test1", "foo", true, "test@gmail.com");
+		Account account1 = new Account("test@gmail.com", "foo", true);
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		accounts.add(account1);
 		//mocking the fetch accounts
@@ -41,9 +41,9 @@ public class AccountControllerTests {
 	}
 	
 	@Test 
-	public void testCreateAccountSuccess() {
-		Account account1 = new Account("test1", "foo", true, "test@gmail.com");
-		ResponseEntity<ResponseMessage> response = accountController.createAccount(account1);
+	public void testRegisterAccountSuccess() {
+		Account account1 = new Account("test@gmail.com", "foo", true);
+		ResponseEntity<ResponseMessage> response = accountController.registerAccount(account1);
 		assertEquals(response.getStatusCode(), HttpStatus.CREATED);
 	}
 }

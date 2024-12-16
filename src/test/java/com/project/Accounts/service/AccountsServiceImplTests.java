@@ -26,7 +26,7 @@ public class AccountsServiceImplTests {
 	
 	@Test
 	public void testFetchAccounts() {
-		Account account1 = new Account("test1", "foo", true, "test@gmail.com");
+		Account account1 = new Account("test@gmail.com", "foo", true);
 		List<Account> accounts = new ArrayList<Account>();
 		accounts.add(account1);
 		when(repository.findAll()).thenReturn(accounts);
@@ -36,17 +36,17 @@ public class AccountsServiceImplTests {
 	
 	@Test
 	public void testAccountSaves() {
-		Account account2 = new Account("test2", "foo", true, "test2@gmail.com");
+		Account account2 = new Account("test2@gmail.com", "foo", true);
 		assertEquals(accountService.saveAccount(account2), "Account Succesfully created");
 	}
 	@Test
 	public void testAccountExistsisThrown() {
-		Account account1 = new Account("test1", "foo", true, "test@gmail.com");
+		Account account1 = new Account("test@gmail.com", "foo", true);
 		List<Account> accounts = new ArrayList<Account>();
 		accounts.add(account1);
 		when(repository.findAll()).thenReturn(accounts);
 		//email same as first account
-		Account account2 = new Account("test1", "foo", true, "test@gmail.com");
+		Account account2 = new Account("test@gmail.com", "foo", true);
 		assertThrows(AccountExistsException.class, () -> accountService.saveAccount(account2));
 	}
 	
