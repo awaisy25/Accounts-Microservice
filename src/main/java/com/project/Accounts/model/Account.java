@@ -13,7 +13,6 @@ public class Account {
 	@Id
 	@GeneratedValue
 	private Long ID;
-	private String Username;
 	private String password;
 	private Date Creation_Date;
 	private boolean Active;
@@ -22,8 +21,7 @@ public class Account {
 	
 	public Account() {}
 	
-	public Account(String username, String password, boolean active, String email) {
-		this.Username = username;
+	public Account(String email, String password, boolean active) {
 		this.password = password;
 		this.Active = active;
 		this.Email = email;
@@ -37,12 +35,6 @@ public class Account {
 	}
 	public void setID(Long iD) {
 		ID = iD;
-	}
-	public String getUsername() {
-		return Username;
-	}
-	public void setUsername(String username) {
-		Username = username;
 	}
 	public String getPassword() {
 		return password;

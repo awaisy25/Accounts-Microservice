@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.project.Accounts.model.Account;
 import com.project.Accounts.repository.AccountRepository;
+import com.project.Accounts.constants.ApiConstants;
+import com.project.Accounts.constants.ErrorConstants;
 import com.project.Accounts.error.exceptions.AccountExistsException;
 
 @Service
@@ -27,10 +29,10 @@ public class AccountServiceImpl implements AccountService {
 		//logic to check is email already exists
 		String email = newAccount.getEmail();
 		if(this.fetchAccounts().stream().filter(account -> account.getEmail().equals(email)).findFirst().orElse(null) != null) {
-			throw new AccountExistsException("Email Account Already Exists");
+			throw new AccountExistsException(ErrorConstants.ACCOUNT_EXISTS_MESSAGE);
 		}
 		repository.save(newAccount);
-		return "Account Succesfully created";
+		return ApiConstants.ACCOUNT_CREATED_MESSAGE;
 	}
 
 }
