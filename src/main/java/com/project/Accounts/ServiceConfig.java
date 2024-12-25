@@ -15,4 +15,5 @@ class ServiceConfig {
 		dataSource.setUrl("jdbc:sqlite:memory:AccountsDb?cache=shared");
 		return dataSource;
 	}
+
 }

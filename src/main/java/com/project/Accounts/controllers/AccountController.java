@@ -20,14 +20,14 @@ public class AccountController  {
 	@Autowired
 	private AccountServiceImpl accountService;
 	
-	@PostMapping(value="/accounts")
+	@PostMapping(value="/api/accounts")
 	public ResponseEntity<ResponseMessage> registerAccount(@RequestBody Account accountBody) {
 		Account account = new Account(accountBody.getEmail(), accountBody.getPassword(), true);
 		ResponseMessage response = new ResponseMessage(accountService.saveAccount(account), Status.SUCCESSFUL, account.getID()); 
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
-	@GetMapping(value="/accounts")
+	@GetMapping(value="/api/accounts")
 	public ResponseEntity<ArrayList<Account>> getAccounts() {
 		return new ResponseEntity<>(accountService.fetchAccounts(), HttpStatus.OK);
 	}
