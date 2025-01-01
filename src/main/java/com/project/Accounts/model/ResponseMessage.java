@@ -9,7 +9,7 @@ public class ResponseMessage {
 	private String message;
 	private Status status;
 	private Long accountId;
-	private String token;
+	private JwtToken token;
 	
 	public ResponseMessage(String message, Status status) {
 		super();
@@ -41,11 +41,11 @@ public class ResponseMessage {
 		this.accountId = accountId;
 	}
 
-	public String getToken() {
+	public JwtToken getToken() {
 		return token;
 	}
 
-	public void setToken(String token) {
+	public void setToken(JwtToken token) {
 		this.token = token;
 	}
 
