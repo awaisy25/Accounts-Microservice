@@ -13,6 +13,7 @@ import com.project.Accounts.constants.ApiConstants.Status;
 import com.project.Accounts.model.Account;
 import com.project.Accounts.model.ResponseMessage;
 import com.project.Accounts.service.AccountServiceImpl;
+import com.project.Accounts.service.OauthService;
 
 @RestController
 public class AccountController  {
@@ -20,10 +21,17 @@ public class AccountController  {
 	@Autowired
 	private AccountServiceImpl accountService;
 	
-	@PostMapping(value="/api/accounts")
+	@Autowired
+	private OauthService oauthService;
+	
+	
+	@PostMapping(value="/register")
 	public ResponseEntity<ResponseMessage> registerAccount(@RequestBody Account accountBody) {
 		Account account = new Account(accountBody.getEmail(), accountBody.getPassword(), true);
-		ResponseMessage response = new ResponseMessage(accountService.saveAccount(account), Status.SUCCESSFUL, account.getID()); 
+		String tokenResp = oauthService.generateToken();
+		ResponseMessage response = new ResponseMessage(accountService.saveAccount(account), Status.SUCCESSFUL);
+		response.setAccountId(account.getID());
+		response.setToken(tokenResp);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
