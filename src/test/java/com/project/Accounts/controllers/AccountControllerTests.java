@@ -1,6 +1,7 @@
 package com.project.Accounts.controllers;
 
 import static org.mockito.Mockito.mock;
+
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.project.Accounts.service.AccountServiceImpl;
+import com.project.Accounts.service.OauthService;
 import com.project.Accounts.model.Account;
+import com.project.Accounts.model.JwtToken;
 import com.project.Accounts.model.ResponseMessage;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,6 +29,9 @@ public class AccountControllerTests {
 	
 	@Mock
 	AccountServiceImpl accountService;
+	
+	@Mock
+	OauthService oauthService;
 	
 	@Test
 	public void testGetAccounts() {
@@ -43,7 +49,11 @@ public class AccountControllerTests {
 	@Test 
 	public void testRegisterAccountSuccess() {
 		Account account1 = new Account("test@gmail.com", "foo", true);
+		JwtToken token = new JwtToken();
+		token.setAccess_token("test");
+		when(oauthService.generateToken()).thenReturn(token);
 		ResponseEntity<ResponseMessage> response = accountController.registerAccount(account1);
 		assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+		assertEquals(response.getBody().getToken(), token);
 	}
 }
