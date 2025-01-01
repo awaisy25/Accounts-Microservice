@@ -9,18 +9,12 @@ public class ResponseMessage {
 	private String message;
 	private Status status;
 	private Long accountId;
+	private JwtToken token;
 	
 	public ResponseMessage(String message, Status status) {
 		super();
 		this.message = message;
 		this.status = status;
-	}
-	
-	//parameters for login and register
-	public ResponseMessage(String message, Status status, Long accountId) {
-		this.message = message;
-		this.status = status;
-		this.setAccountId(accountId);
 	}
 	
 	public String getMessage() {
@@ -45,6 +39,14 @@ public class ResponseMessage {
 
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
+	}
+
+	public JwtToken getToken() {
+		return token;
+	}
+
+	public void setToken(JwtToken token) {
+		this.token = token;
 	}
 
 }

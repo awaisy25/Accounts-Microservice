@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Accounts.constants.ApiConstants.Status;
 import com.project.Accounts.model.Account;
+import com.project.Accounts.model.JwtToken;
 import com.project.Accounts.model.ResponseMessage;
 import com.project.Accounts.service.AccountServiceImpl;
+import com.project.Accounts.service.OauthService;
 
 @RestController
 public class AccountController  {
@@ -20,14 +22,21 @@ public class AccountController  {
 	@Autowired
 	private AccountServiceImpl accountService;
 	
-	@PostMapping(value="/accounts")
+	@Autowired
+	private OauthService oauthService;
+	
+	
+	@PostMapping(value="/register")
 	public ResponseEntity<ResponseMessage> registerAccount(@RequestBody Account accountBody) {
 		Account account = new Account(accountBody.getEmail(), accountBody.getPassword(), true);
-		ResponseMessage response = new ResponseMessage(accountService.saveAccount(account), Status.SUCCESSFUL, account.getID()); 
+		JwtToken token = oauthService.generateToken();
+		ResponseMessage response = new ResponseMessage(accountService.saveAccount(account), Status.SUCCESSFUL);
+		response.setAccountId(account.getID());
+		response.setToken(token);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
-	@GetMapping(value="/accounts")
+	@GetMapping(value="/api/accounts")
 	public ResponseEntity<ArrayList<Account>> getAccounts() {
 		return new ResponseEntity<>(accountService.fetchAccounts(), HttpStatus.OK);
 	}
